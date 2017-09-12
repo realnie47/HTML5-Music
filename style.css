@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #d2d5d6;
+    font: 14px/1.5 微软雅黑, sans-serif;
+}
+
+div.player {
+    position: relative;
+
+    margin: auto;
+    margin-top: 20px;
+    width: 375px;
+    height: 550px;
+
+    background-color: #eef1f2;
+    border-radius: 15px;
+    box-shadow: 0px 10px 10px #999;
+
+    overflow: hidden;
+}
+
+div.header {
+    margin: auto;
+    margin-top: 20px;
+
+    color: #2b2b2b;
+    font-size: 1.6em;
+    font-weight: bold;
+    text-align: center;
+}
+
+div.album-pic {
+    width: 270px;
+    height: 270px;
+    margin: auto;
+    margin-top: 20px;
+
+    border: 40px solid #2b2b2b;
+    border-radius: 270px;
+    background-size: contain;
+    box-shadow: 2px 2px 5px #222222;
+
+    animation-name: picRot;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+
+@keyframes picRot {
+    from {transform: rotate(0);}
+    to {transform: rotate(360deg);}
+}
+
+div.info {
+    margin-top: 20px;
+    color: #2b2b2b;
+    text-align: center;
+}
+
+div.info-title {
+    font-size: 1.6em;
+}
+
+div.controls {
+    position: relative;
+
+    margin-top: 20px;
+
+    color: white;
+}
+
+div.play {
+
+    height: 60px;
+    width: 60px;
+    margin: auto;
+
+    font-size: 2em;
+    text-align: center;
+    padding-top: 15px;
+
+
+    
+    border-radius: 50%;
+    background-color: #2b2b2b;
+}
+
+div.previous,
+div.next {
+    font-size: 2em;
+    position: absolute;
+    bottom: 18px;
+    color: #2b2b2b;
+}
+
+
+
+div.previous {
+    left: 100px;
+}
+
+div.next {
+    right: 100px;
+}
+
+
+div.cdiv {
+    display: inline-block;
+    width: 375px;
+    height: 32px;
+    overflow: hidden;
+    margin-top: 28px;
+    position: relative;
+}
+
+div.progress {
+    display: inline-block;
+    height: 25px;
+    position: absolute;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    bottom: 7px;
+    z-index: 999;
+}
+
+#canvas {
+    width: 375px;
+    height: 80px;
+    position: absolute;
+    bottom: 0px;
+
+}
+
+
+div.like {
+    position: absolute; 
+    bottom: 20px;
+    left: 40px;
+    font-size: 1.6em;
+    color: #2b2b2b;
+}
+
+i.fa-heart {
+    color: #a40000
+}
+
+div.lrc {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    font-size: 1.6em;
+    color: #2b2b2b;
+}
