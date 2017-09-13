@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0; 
 }
 
 body {
@@ -7,11 +9,19 @@ body {
     font: 14px/1.5 微软雅黑, sans-serif;
 }
 
+div.app {
+    position: relative;
+    width: 1024px;
+    height: 600px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+/* 播放器 */
 div.player {
     position: relative;
 
     margin: auto;
-    margin-top: 20px;
     width: 375px;
     height: 550px;
 
@@ -22,6 +32,8 @@ div.player {
     overflow: hidden;
 }
 
+
+/* 播放器标题 */
 div.header {
     margin: auto;
     margin-top: 20px;
@@ -32,6 +44,8 @@ div.header {
     text-align: center;
 }
 
+
+/* 专辑图片 */
 div.album-pic {
     width: 270px;
     height: 270px;
@@ -48,47 +62,42 @@ div.album-pic {
     animation-iteration-count: infinite;
     animation-timing-function: linear;
 }
-
-
 @keyframes picRot {
     from {transform: rotate(0);}
     to {transform: rotate(360deg);}
 }
 
+
+/* 音乐信息 */
 div.info {
     margin-top: 20px;
     color: #2b2b2b;
     text-align: center;
 }
-
 div.info-title {
     font-size: 1.6em;
 }
-
 div.controls {
     position: relative;
-
     margin-top: 20px;
-
     color: white;
 }
 
-div.play {
 
-    height: 60px;
-    width: 60px;
+/* 控制区 */
+div.play {
+    /* height: 60px;
+    width: 60px; */
     margin: auto;
 
-    font-size: 2em;
+    font-size: 4em;
     text-align: center;
-    padding-top: 15px;
+    padding-bottom: 3px;
 
-
-    
-    border-radius: 50%;
-    background-color: #2b2b2b;
+    color: #2b2b2b;
+    /* border-radius: 50%; */
+    /* background-color: #2b2b2b; */
 }
-
 div.previous,
 div.next {
     font-size: 2em;
@@ -96,18 +105,32 @@ div.next {
     bottom: 18px;
     color: #2b2b2b;
 }
-
-
-
 div.previous {
     left: 100px;
 }
-
 div.next {
     right: 100px;
 }
+div.like {
+    position: absolute; 
+    bottom: 20px;
+    left: 40px;
+    font-size: 1.6em;
+    color: #2b2b2b;
+}
+i.fa-heart {
+    color: #a40000
+}
+div.lrc {
+    position: absolute; 
+    bottom: 20px;
+    right: 40px;
+    font-size: 1.6em;
+    color: #2b2b2b;
+}
 
 
+/* 进度条 */
 div.cdiv {
     display: inline-block;
     width: 375px;
@@ -116,7 +139,6 @@ div.cdiv {
     margin-top: 28px;
     position: relative;
 }
-
 div.progress {
     display: inline-block;
     height: 25px;
@@ -127,32 +149,49 @@ div.progress {
     bottom: 7px;
     z-index: 999;
 }
-
 #canvas {
     width: 375px;
     height: 80px;
     position: absolute;
     bottom: 0px;
-
 }
 
 
-div.like {
-    position: absolute; 
-    bottom: 20px;
-    left: 40px;
-    font-size: 1.6em;
-    color: #2b2b2b;
-}
-
-i.fa-heart {
-    color: #a40000
-}
-
-div.lrc {
+/* 歌词 */
+.music-lyric {
     position: absolute;
-    bottom: 20px;
-    right: 40px;
-    font-size: 1.6em;
-    color: #2b2b2b;
+    right: 0px;
+    top: 30px;
+
+    width: 300px;
+    height: 400px;
+
+    background-color: #eef1f2;
+    border-radius: 15px;
+    box-shadow: 0px 10px 10px #999;
+
+    color: black;
+    overflow: hidden;
+
+    opacity: 0;
+
+    transition: all 0.5s;
+}
+
+.music-lyric ul{
+	position: relative;
+    transition: all 1s;
+    list-style: none;
+}
+
+.music-lyric li{
+	padding: 5px 0 2px 0;
+	position: relative;
+	text-align: center;
+	font-size: 12px ;
+	transition: all 1s;
+}
+.music-lyric li.active {
+  font-size: 13px;
+  color: #d2d5d6;
 }

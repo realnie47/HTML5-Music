@@ -3,77 +3,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HTML5音乐播放器</title>
+    <title>LOVE音乐</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
 <body>
-    <!-- 播放器容器 -->
-    <div class="player">
 
-        <!-- 播放器名称 -->
-        <div class="header">音乐播放器</div>
-
-        <!-- 音乐专辑图 -->
-        <div class="album-pic"></div>
-
-        <!-- 音乐信息 -->
-        <div class="info">
-
-            <!-- 歌曲名 -->
-            <div class="info-title">歌名</div>
-
-            <!-- 歌手 -->
-            <div class="info-songer">歌手</div>
-
-        </div>
-
-
-        <!-- 控制区 -->
-        <div class="controls">
-
-            <!-- 喜欢 -->
-            <div class="like"><i class="fa fa-heart-o"></i></div>
-
-            <!-- 上一曲 -->
-            <div class="previous">
-                <i class="fa fa-step-backward"></i>
+    <div class="app">
+        <!-- 播放器容器 -->
+        <div class="player">
+            <!-- 播放器名称 -->
+            <div class="header">音乐播放器</div>
+            <!-- 音乐专辑图 -->
+            <div class="album-pic"></div>
+            <!-- 音乐信息 -->
+            <div class="info">
+                <!-- 歌曲名 -->
+                <div class="info-title">歌名</div>
+                <!-- 歌手 -->
+                <div class="info-songer">歌手</div>
             </div>
-
-            <!-- 播放 -->
-            <div class="play">
-                <i class="fa fa-play"></i>
+            <!-- 控制区 -->
+            <div class="controls">
+                <!-- 喜欢 -->
+                <div class="like"><i class="fa fa-heart-o"></i></div>
+                <!-- 上一曲 -->
+                <div class="previous">
+                    <i class="fa fa-step-backward"></i>
+                </div>
+                <!-- 播放 -->
+                <div class="play">
+                    <i class="fa fa-pause-circle"></i>
+                </div>
+                <!-- 下一曲 -->
+                <div class="next">
+                    <i class="fa fa-step-forward"></i>
+                </div>
+                <!-- 歌词 -->
+                <div class="lrc"><i class="fa fa-file-text-o"></i></div>
             </div>
-
-            <!-- 下一曲 -->
-            <div class="next">
-                <i class="fa fa-step-forward"></i>
+            <!-- 播放进度条 -->
+            <div class="cdiv">
+                <div class="progress"></div>
+                <canvas id="canvas"></canvas>
             </div>
-
-            <!-- 歌词 -->
-            <div class="lrc"><i class="fa fa-file-text-o"></i></div>
-
+            <!-- 音频控件 -->
+            <audio id="audio">  
+            </audio>
         </div>
-
-
-        <!-- 播放进度条 -->
-        <div class="cdiv">
-            <div class="progress"></div>
-            <canvas id="canvas"></canvas>
+    
+        <!-- 歌词容器 -->
+        <div class="music-lyric">
+            <div class="lyric-view">
+                <ul class="lyric"></ul>
+            </div>
         </div>
-
-        <!-- 音频控件 -->
-        <audio id="audio">  
-        </audio>
-
     </div>
+    
 
-
- 
+    <!-- script -->
     <script src="play.js"></script>
-    <!-- <script src="audio.js"></script> -->
+    <script src="audio.js"></script>
 </body>
 </html>
