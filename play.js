@@ -120,7 +120,7 @@ function getMusic() {
   //发送请求获取音乐信息列表
   $.ajax({
     type: "GET",
-    url: "http://47.93.102.235:3000/artists?id=893259",
+    url: "https://api.imjad.cn/cloudmusic/?type=artist&id=893259",
     dataType: "json",
     success: function(response) {
       resource = response.hotSongs;
@@ -149,7 +149,7 @@ function getMusic() {
 // 获取音乐 url
 function getUrl() {
   // 根据ID请求音乐
-  var musicUrl = "http://47.93.102.235:3000/music/url?id=" + musicId;
+  var musicUrl = "https://api.imjad.cn/cloudmusic/?type=song&id=" + musicId;
   $.ajax({
     type: "GET",
     url: musicUrl,
@@ -168,7 +168,7 @@ function getUrl() {
 // 获取歌词
 function getLrc() {
   // 根据ID请求歌词
-  var lrcUrl = "http://47.93.102.235:3000/lyric?id=" + musicId;
+  var lrcUrl = "https://api.imjad.cn/cloudmusic/?type=lyric&id=" + musicId;
   $.ajax({
     type: "GET",
     url: lrcUrl,
