@@ -25,52 +25,6 @@ function visualM() {
   }
 }
 
-function visual() {
-  // 创建音频上下文
-  audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  // 效果节点
-  analyser = audioContext.createAnalyser();
-
-  // 音频源
-  // 通过 <audio>元素获得音频源
-  // source = audioContext.createMediaElementSource(myAudio);
-  // 通过网络请求获得
-  // getData();
-
-  // 连接源到效果器
-  source.connect(analyser);
-  // 连接源到目的地
-  source.connect(audioContext.destination);
-
-  // 可视化
-  drawIt();
-}
-
-// 通过网络请求获得音频源
-function getData() {
-  var request = new XMLHttpRequest(); //开一个请求
-  request.open("GET", songUrl, true); //往url请求数据
-  request.responseType = "arraybuffer"; //设置返回数据类型
-  request.onload = function() {
-    var audioData = request.response;
-    source = audioContext.createBufferSource();
-    //数据缓冲完成之后，进行解码
-    var buffer = audioContext.createBuffer(2, 22050, 44100); //创建一个双通道、22050帧，44.1k采样率的缓冲数据。
-    audioContext.decodeAudioData(
-      audioData,
-      function(buffer) {
-        source.buffer = buffer; //将解码出来的数据放入source中
-        //进行数据处理
-      },
-      function(err) {
-        //解码出错处理
-        console.log("数据错误");
-      }
-    );
-  };
-  request.send();
-}
-
 //音频可视化 条形
 function drawIt() {
   var bufferLength;
@@ -83,7 +37,7 @@ function drawIt() {
   draw = function() {
     window.requestAnimationFrame(draw);
     analyser.getByteFrequencyData(dataArray);
-    canvasCtx.fillStyle = "#555";
+    canvasCtx.fillStyle = "#eef1f2";
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
     var barWidth = WIDTH / bufferLength * 2.5;
     var barHeight;
@@ -98,6 +52,51 @@ function drawIt() {
   draw();
 }
 
-window.onload = function() {
-  visualM();
-};
+// function visual() {
+//   // 创建音频上下文
+//   audioContext = new (window.AudioContext || window.webkitAudioContext)();
+//   // 效果节点
+//   analyser = audioContext.createAnalyser();
+
+//   // 音频源
+//   // 通过 <audio>元素获得音频源
+//   // source = audioContext.createMediaElementSource(myAudio);
+//   // 通过网络请求获得
+//   // getData();
+
+//   // 连接源到效果器
+//   source.connect(analyser);
+//   // 连接源到目的地
+//   source.connect(audioContext.destination);
+
+//   // 可视化
+//   drawIt();
+// }
+
+// 通过网络请求获得音频源
+// function getData() {
+//   var request = new XMLHttpRequest(); //开一个请求
+//   request.open("GET", songUrl, true); //往url请求数据
+//   request.responseType = "arraybuffer"; //设置返回数据类型
+//   request.onload = function() {
+//     var audioData = request.response;
+//     source = audioContext.createBufferSource();
+//     //数据缓冲完成之后，进行解码
+//     var buffer = audioContext.createBuffer(2, 22050, 44100); //创建一个双通道、22050帧，44.1k采样率的缓冲数据。
+//     audioContext.decodeAudioData(
+//       audioData,
+//       function(buffer) {
+//         source.buffer = buffer; //将解码出来的数据放入source中
+//         //进行数据处理
+//       },
+//       function(err) {
+//         //解码出错处理
+//         console.log("数据错误");
+//       }
+//     );
+//   };
+//   request.send();
+// }
+
+
+

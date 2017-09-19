@@ -1,70 +1,129 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN" manifest="index.appcache">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>LOVE音乐</title>
-    <link rel="stylesheet" href="style.css">
+    <title>HTML5音乐</title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="player-style2.css" id="style">
 </head>
 <body>
 
     <div class="app">
-        <!-- 播放器容器 -->
-        <div class="player">
-            <!-- 播放器名称 -->
-            <div class="header">音乐播放器</div>
-            <!-- 音乐专辑图 -->
-            <div class="album-pic"></div>
-            <!-- 音乐信息 -->
-            <div class="info">
-                <!-- 歌曲名 -->
-                <div class="info-title">歌名</div>
-                <!-- 歌手 -->
-                <div class="info-songer">歌手</div>
-            </div>
-            <!-- 控制区 -->
-            <div class="controls">
-                <!-- 喜欢 -->
-                <div class="like"><i class="fa fa-heart-o"></i></div>
-                <!-- 上一曲 -->
-                <div class="previous">
-                    <i class="fa fa-step-backward"></i>
+        <!-- 播放器 -->
+        <div class="app-container">
+           <div class="player" id="musicPlayer">
+                <div class="playerSwitch">
+                    <i class="fa fa-window-minimize" onclick="switchCSS1()" id="min"></i>
+                    <i class="fa fa-window-maximize" onclick="switchCSS2()" id="max"></i>
                 </div>
-                <!-- 播放 -->
-                <div class="play">
-                    <i class="fa fa-pause-circle"></i>
+                <!-- 音乐专辑图 -->
+                <div class="album-pic"></div>
+                <!-- 音乐信息 -->
+                <div class="info">
+                    <!-- 歌曲名 -->
+                    <div class="info-title">歌名</div>
+                    <!-- 歌手 -->
+                    <div class="info-songer">歌手</div>
                 </div>
-                <!-- 下一曲 -->
-                <div class="next">
-                    <i class="fa fa-step-forward"></i>
+    
+                <!-- 控制区 -->
+                <div class="controls">
+                    <!-- 喜欢 -->
+                    <div class="list"><i class="fa fa-th-list"></i></div>
+                    <!-- 上一曲 -->
+                    <div class="previous">
+                        <i class="fa fa-step-backward"></i>
+                    </div>
+                    <!-- 播放 -->
+                    <div class="play">
+                        <i class="fa fa-pause-circle"></i>
+                    </div>
+                    <!-- 下一曲 -->
+                    <div class="next">
+                        <i class="fa fa-step-forward"></i>
+                    </div>
+                    <!-- 歌词 -->
+                    <div class="lrc"><i class="fa fa-file-text-o"></i></div>
                 </div>
-                <!-- 歌词 -->
-                <div class="lrc"><i class="fa fa-file-text-o"></i></div>
+    
+                <!-- 音频可视化 -->
+                <div class="cdiv">
+                    <div class="progress"></div>
+                    <canvas id="canvas"></canvas>
+                </div>
+                
+                <!-- 音频控件 -->
+                <audio id="audio">  
+                </audio>
             </div>
-            <!-- 播放进度条 -->
-            <div class="cdiv">
-                <div class="progress"></div>
-                <canvas id="canvas"></canvas>
-            </div>
-            <!-- 音频控件 -->
-            <audio id="audio">  
-            </audio>
         </div>
     
-        <!-- 歌词容器 -->
-        <div class="music-lyric">
+        <!-- 歌词 -->
+        <div class="music-lyric" id="musicLyric">
             <div class="lyric-view">
                 <ul class="lyric"></ul>
             </div>
         </div>
+
+        <!-- 歌曲列表 -->
+        <div class="album" id="musicAlbum">
+            <div class="albumHead">
+                <span>歌曲列表</span>
+                <div class="fa fa-random" id="random"></div>
+            </div>
+            <div class="albumContainer">
+                <table id="songList" >
+                    <tr>
+                        <td>歌 曲</td>
+                        <td>歌 手</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 搜索框 -->
+        <div id="searchDiv">
+            <input type="input" id="search" value="金玟岐"> 
+            <i class="fa fa-search"></i>
+            <div class="artistlist">
+                <ul>
+                    
+                </ul>
+            </div>
+        </div>  
+        
+        <!-- 大碟 -->
+        <div class="de">
+            <div><img src="caozong.png" alt="" id="cao"></div>
+            <div class="bigCD">
+                <div class="hole"></div>
+                <img src="#" alt="">
+            </div>
+        </div>
+
+        
     </div>
-    
+
 
     <!-- script -->
-    <script src="play.js"></script>
+    <script>
+        // 切换播放器
+        function switchCSS1() {
+            $('#style').attr('href','player-style2.css')
+        }
+        function switchCSS2() {
+            $('#style').attr('href','player-style1.css')
+        }
+    </script>
+
+    <script src="option.js"></script>
     <script src="audio.js"></script>
+    <script src="play.js"></script>
 </body>
 </html>

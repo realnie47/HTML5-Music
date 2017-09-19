@@ -1,0 +1,154 @@
+/* 播放器 */
+div.player {
+    position: absolute;
+    top: 0;
+    left: 35%;
+
+
+    width: 375px;
+    height: 500px;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0px 10px 10px #999;
+
+    background-color: #eef1f2;
+
+    overflow: hidden;
+
+    transition: height 0.15s;
+}
+
+/* 缩小 */
+div.playerSwitch {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+}
+
+i#max {
+    display: none;
+}
+
+/* 专辑图片 */
+div.album-pic {
+    width: 270px;
+    height: 270px;
+    margin: auto;
+    margin-top: 20px;
+    border: 40px solid #2b2b2b;
+    border-radius: 270px;
+    box-shadow: 2px 2px 5px #222222;
+
+    background-size: contain;
+
+    animation-name: picRot;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes picRot {
+    from {transform: rotate(0);}
+    to {transform: rotate(360deg);}
+}
+
+
+/* 音乐信息 */
+div.info {
+    margin-top: 20px;
+
+    color: #2b2b2b;
+    text-align: center;
+}
+div.info-title {
+    font-size: 1.6em;
+}
+div.controls {
+    position: relative;
+
+    margin-top: 20px;
+
+    color: white;
+}
+
+
+/* 控制区 */
+div.play {
+    margin: auto;
+
+    font-size: 4em;
+    text-align: center;
+    color: #2b2b2b;
+}
+div.previous,
+div.next {
+    position: absolute;
+    bottom: 20px;
+
+    font-size: 2em;
+    color: #2b2b2b;
+}
+div.previous {
+    left: 100px;
+}
+div.next {
+    right: 100px;
+}
+div.list {
+    position: absolute; 
+    bottom: 25px;
+    left: 40px;
+
+    font-size: 1.6em;
+    color: #2b2b2b;
+}
+i.fa-heart {
+    color: #a40000
+}
+div.lrc {
+    position: absolute; 
+    bottom: 25px;
+    right: 40px;
+
+    font-size: 1.6em;
+    color: #2b2b2b;
+}
+
+
+/* 音频可视化 */
+div.cdiv {
+    position: relative;
+    display: inline-block;
+
+    width: 375px;
+    height: 38px;
+    
+
+    overflow: hidden;
+}
+
+div.progress {
+    display: inline-block;
+    height: 5px;
+    position: absolute;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    bottom: 10px;
+    z-index: 999;
+}
+
+#canvas {
+    position: absolute;
+    bottom: 0px;
+
+    width: 375px;
+    height: 80px;
+}
+
+div.bigCD {
+    display: none;
+}
+
+#cao {
+    display: none;
+}

@@ -1,21 +1,11 @@
-var player = $(".player"); // 播放器
-var lrcPanel = $(".music-lyric"); // 歌词面板
-var bgPic = $(".album-pic"); // 专辑图片
-var myAudio = $("#audio")[0]; // 音频
-var playBtn = $(".play"); // 播放、暂停按钮
-var nextBtn = $(".next");
-var previousBtn = $(".previous"); // 切歌按钮
-var likeBtn = $(".like"); // 喜欢按钮
-var lrcBtn = $(".lrc"); // 歌词按钮
-var progressBar = $(".progress"); //进度条
-var resource; // 音乐列表
-var index = 1; // 音乐索引
+var myAudio = $("#audio")[0]; // 音频源
+var index = 0; // 音乐索引
+var artistId; // 歌手ID
 var lyricArr = [];
-var musicId; //音乐ID
-var songUrl; //音乐url
+var random = false;
 
-// 播放按钮事件
-playBtn.click(function() {
+// 播放、暂停按钮
+$(".play").click(function() {
   // 如果音频状态为暂停，则播放，如果不是暂停，则暂停
   if (myAudio.paused) {
     play();
@@ -24,87 +14,138 @@ playBtn.click(function() {
   }
 });
 // 下一首按钮
-nextBtn.click(function() {
-  // 音乐索引增加
-  index++;
-
-  getMusic();
+$(".next").click(function() {
+  if (random === true) {
+    index = Math.floor(Math.random() * songList.hotSongs.length);
+    console.log(index);
+  } else {
+    index++;
+  }
+  songPlay();
 });
 // 上一首按钮
-previousBtn.click(function() {
-  if (index == 0) {
+$(".previous").click(function() {
+  if (index === 0) {
     return;
   }
-  // 音乐索引
-  index--;
-
-  getMusic();
-});
-// 喜欢按钮事件
-likeBtn.click(function() {
-  if (likeBtn.children().hasClass("fa-heart-o")) {
-    likeBtn
-      .children()
-      .removeClass("fa-heart-o")
-      .addClass("fa-heart");
-    //加入喜欢列表
+  if (random === true) {
+    index = Math.floor(Math.random() * songList.hotSongs.length);
+    console.log(index);
   } else {
-    likeBtn
-      .children()
-      .removeClass("fa-heart")
-      .addClass("fa-heart-o");
-    //移出喜欢列表
+    index-- ;
   }
+  songPlay();
 });
-//歌词按钮事件
-lrcBtn.click(function() {
-  if (lrcBtn.children().hasClass("fa-file-text-o")) {
-    lrcBtn
+// // 喜欢按钮事件
+// $(".like").click(function() {
+//   if ($(".like").children().hasClass("fa-heart-o")) {
+//     $(".like")
+//       .children()
+//       .removeClass("fa-heart-o")
+//       .addClass("fa-heart");
+//     //加入喜欢列表
+//   } else {
+//     $(".like")
+//       .children()
+//       .removeClass("fa-heart")
+//       .addClass("fa-heart-o");
+//     //移出喜欢列表
+//   }
+// });
+
+// 歌曲列表按钮
+$(".list").click(function() {
+  $('#musicAlbum').fadeToggle();
+})
+
+//歌词按钮
+$(".lrc").click(function() {
+  if ($(".lrc").children().hasClass("fa-file-text-o")) {
+    $(".lrc")
       .children()
       .removeClass("fa-file-text-o")
       .addClass("fa-file-text");
-    // 打开歌词面板
-    lrcPanel.css("opacity", "1");
   } else {
-    lrcBtn
+    $(".lrc")
       .children()
       .removeClass("fa-file-text")
       .addClass("fa-file-text-o");
-    // 关闭歌词面板
-    lrcPanel.css("opacity", "0");
   }
+  $("#musicLyric").fadeToggle();
 });
+
+// 键盘控制
+$(window).keydown(function(ev) {
+  var key = ev.keyCode;
+  if (key === 32) {
+    $(".play").click();
+  }
+  if (key === 39) {
+    $(".next").click();
+  }
+  if (key === 37) {
+    $(".previous").click();
+  }
+})
+
+// 搜索框
+$('#search').keydown(function(e) {
+  if(e.keyCode == 13 ){
+    searchArtist(this.value);
+    // 置零index
+    index = 0;
+    // 清空歌曲列表
+    $('#songList').empty();
+  }
+})
+
+// 随机列表按钮
+$('#random').click(function() {
+  if (random === false) {
+    $(this).css('color','#a40000');
+    random = true;
+  } else {
+    $(this).css('color','');
+    random = false;
+  }
+})
 
 // 播放
 function play() {
-  myAudio.play();
   // 改变播放按钮为暂停
-  playBtn
+  $(".play")
     .children()
     .removeClass("fa-play-circle")
     .addClass("fa-pause-circle");
   // 专辑动画
-  bgPic.css("animation-play-state", "running");
+  $(".album-pic").css("animation-play-state", "running");
+  $(".bigCD").css("animation-play-state", "running");
+  // 操纵杆
+  $("#cao").css('transform','rotate(0deg)');
+  myAudio.play();
 }
 // 暂停
 function pause() {
-  myAudio.pause();
   // 改变暂停按钮为播放
-  playBtn
+  $(".play")
     .children()
     .removeClass("fa-pause-circle")
     .addClass("fa-play-circle");
   // 专辑动画
-  bgPic.css("animation-play-state", "paused");
+  $(".album-pic").css("animation-play-state", "paused");
+  $(".bigCD").css("animation-play-state", "paused");
+  $("#cao").css('transform','rotate(-60deg)');
+  myAudio.pause();
 }
 
 // 进度条
 function present() {
+  // audio元素属性
   var length = myAudio.currentTime / myAudio.duration * 100;
-  progressBar.width(length + "%"); //设置进度条长度
+  $(".progress").width(length + "%"); //设置进度条长度
   //自动下一曲
-  if (myAudio.currentTime == myAudio.duration) {
-    nextBtn.click();
+  if (myAudio.currentTime === myAudio.duration) {
+    $(".next").click();
   }
 }
 // 拖拽进度条控制进度
@@ -115,67 +156,128 @@ $(".cdiv").mousedown(function(ev) {
   myAudio.currentTime = myAudio.duration * percentage / 100;
 });
 
-//获取音乐信息
-function getMusic() {
-  //发送请求获取音乐信息列表
+
+// 搜索歌手
+function searchList(sw) {
   $.ajax({
     type: "GET",
-    url: "https://api.imjad.cn/cloudmusic/?type=artist&id=893259",
+    url: "https://api.imjad.cn/cloudmusic/",
+    data: {
+      type: "search",
+      s: sw,
+      search_type: 100
+    },
     dataType: "json",
-    success: function(response) {
-      resource = response.hotSongs;
-      // 根据索引获取歌曲
-      var songinfo = resource[index];
-      var bgPic = songinfo.al.picUrl;
-      var title = songinfo.name;
-      var artist = response.artist.name;
+    success: function (response) {
+      var artistlist = response.artist;
+      for (var i = 0;i < artistlist.length;i++) {
 
-      // 获取音乐ID
-      musicId = resource[index].id;
-      // 专辑封面
-      $(".album-pic").css("background-image", "url(" + bgPic + ")");
-      // 歌曲名
-      $(".info-title").text(title);
-      // 歌手名
-      $(".info-songer").text(artist);
-
-      // 获取音乐 url
-      getUrl();
-      // 获取歌词 url
-      getLrc();
+      }
     }
   });
 }
-// 获取音乐 url
-function getUrl() {
-  // 根据ID请求音乐
-  var musicUrl = "https://api.imjad.cn/cloudmusic/?type=song&id=" + musicId;
+
+
+function searchArtist(sw) {
   $.ajax({
     type: "GET",
-    url: musicUrl,
+    url: "https://api.imjad.cn/cloudmusic/",
     dataType: "json",
+    data: {
+      type: "search",
+      s: sw,
+      search_type: 100
+    },
     success: function(response) {
-      songUrl = response.data[0].url;
-      // 音乐url
-      $("#audio").attr("src", songUrl);
+      artistId = response.result.artists[0].id;
+      localStorage.artistId = artistId;
+      // 根据歌手ID获取热歌
+      getMusic(parseInt(artistId));
 
+    }
+  })
+}
+
+// 热歌列表对象
+var songList = new Object();
+
+//获取热歌信息
+function getMusic(id) {
+  //发送请求获取热歌信息列表
+  $.ajax({
+    type: "GET",
+    url: "https://api.imjad.cn/cloudmusic/",
+    dataType: "json",
+    data: {
+      type: "artist",
+      id: id
+    },
+    success: function(response) {
+      // 获取数据
+      songList.hotSongs = response.hotSongs;
+      songList.artist = response.artist.name
+      // 展示歌曲列表
+      showSongList();
+      // 播放歌曲
+      songPlay();
+    }
+  });
+}
+
+// 播放歌曲
+function songPlay(){
+  $.ajax({
+    type: "GET",
+    url: "https://api.imjad.cn/cloudmusic/",
+    dataType: "json",
+    data: {
+      type: "song",
+      id: songList.hotSongs[index].id
+    },
+    success: function(response) {
+      // 音乐url
+      $("#audio").attr("src", response.data[0].url);
       // 播放音乐
       play();
+      // 更新UI
+      updateUI();
+      // 保存索引
+      localStorage.songIndex = index;
     }
   });
 }
 
-// 获取歌词
-function getLrc() {
+// 更新UI
+function updateUI() {
+  // 设置专辑封面
+  $(".album-pic").css("background-image", "url(" + songList.hotSongs[index].al.picUrl + ")");
+  // 设置歌曲名
+  $(".info-title").text(songList.hotSongs[index].name);
+  // 设置歌手名
+  $(".info-songer").text(songList.artist);
+  // 设置CD封面
+  $(".bigCD img").first().attr('src',songList.hotSongs[index].al.picUrl);
+  // 展示歌词
+  showLrc();
+  // 显示选中音乐
+  selectSong();
+  // 显示进度条动画
+  setInterval(present, 500); //每0.5秒计算进度条长度
+}
+
+// 展示歌词
+function showLrc() {
   // 根据ID请求歌词
-  var lrcUrl = "https://api.imjad.cn/cloudmusic/?type=lyric&id=" + musicId;
   $.ajax({
     type: "GET",
-    url: lrcUrl,
+    url: "https://api.imjad.cn/cloudmusic/",
     dataType: "json",
+    data: {
+      type: "lyric",
+      id: songList.hotSongs[index].id
+    },
     success: function(response) {
       var lyr = response.lrc;
-      console.log(lyr);
       if (!!lyr.lyric) {
         $(".music-lyric .lyric").empty(); //清空歌词信息
         var line = lyr.lyric.split("\n"); //歌词为以排数为界的数组
@@ -251,9 +353,49 @@ function showLyric() {
   }
 }
 
+// 展示歌曲列表
+function showSongList() {
+  if ($('#songList tr').length > songList.hotSongs.length) {
+    return;
+  }
+  for(var i = 0;i < songList.hotSongs.length;i++) {
+    var nameTd = '<td>' + songList.hotSongs[i].name + '</td>';
+    var artistTd = '<td>' + songList.artist + '</td>';
+    $('#songList').append('<tr>' + nameTd + artistTd + '</tr>');
+    $('#songList tr').last().attr('index',i).click(function() {
+      index = parseInt($(this).attr('index'));
+      songPlay();
+    });
+  }
+}
+
+// 歌曲列表选中
+function selectSong() {
+  for(var i = 0;i < songList.hotSongs.length;i++) {
+    if($("[index=" + i + "]").attr('class') === "on") {
+      $("[index=" + i + "]").attr('class','');
+    }
+    $("[index=" + index + "]").attr('class','on');
+  }
+}
+
+
 $(document).ready(function() {
+  // 获取歌手id
+  artistId = parseInt(localStorage.artistId);
+  // 获取歌曲索引
+  index = parseInt(localStorage.songIndex);
+  
   // 获取音乐并播放
-  getMusic();
-  // 进度条
-  setInterval(present, 500); //每0.5秒计算进度条长度
+  // getMusic(artistId);
+
+  // 音乐可视化
+  visualM();
+
+
+  // 界面元素拖放
+  // var app = $('.app').children();
+  // for (var i = 0;i < app.length;i++) {
+  //   drag(app[i]);
+  // }
 });
