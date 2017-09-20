@@ -3,6 +3,7 @@ var index = 0; // 音乐索引
 var artistId; // 歌手ID
 var lyricArr = [];
 var random = false;
+var commentTimer;
 
 // 播放、暂停按钮
 $(".play").click(function() {
@@ -60,19 +61,55 @@ $(".list").click(function() {
 
 //歌词按钮
 $(".lrc").click(function() {
-  if ($(".lrc").children().hasClass("fa-file-text-o")) {
-    $(".lrc")
+  if ($(this).children().hasClass("fa-file-text-o")) {
+    $(this)
       .children()
       .removeClass("fa-file-text-o")
       .addClass("fa-file-text");
   } else {
-    $(".lrc")
+    $(this)
       .children()
       .removeClass("fa-file-text")
       .addClass("fa-file-text-o");
   }
   $("#musicLyric").fadeToggle();
 });
+
+// 评论按钮
+$(".commentBtn").click(function() {
+  if ($(this).children().hasClass("fa-commenting-o")) {
+    $(this)
+      .children()
+      .removeClass("fa-commenting-o")
+      .addClass("fa-commenting");
+      songComments();
+  } else {
+    $(this)
+      .children()
+      .removeClass("fa-commenting")
+      .addClass("fa-commenting-o");
+      clearTimeout(commentTimer);
+      
+  }
+
+})
+
+// 锁定播放器按钮
+$('.lock').click(function() {
+  if ($(this).children().hasClass("fa-unlock")) {
+    $(this)
+      .children()
+      .removeClass("fa-unlock")
+      .addClass("fa-lock");
+      $('.app-container').unbind('mouseenter mouseleave');
+  } else {
+    $(this)
+      .children()
+      .removeClass("fa-lock")
+      .addClass("fa-unlock");
+      activePlayer();
+  }
+})
 
 // 键盘控制
 $(window).keydown(function(ev) {
@@ -85,17 +122,6 @@ $(window).keydown(function(ev) {
   }
   if (key === 37) {
     $(".previous").click();
-  }
-})
-
-// 搜索框
-$('#search').keydown(function(e) {
-  if(e.keyCode == 13 ){
-    searchArtist(this.value);
-    // 置零index
-    index = 0;
-    // 清空歌曲列表
-    $('#songList').empty();
   }
 })
 
@@ -157,52 +183,12 @@ $(".cdiv").mousedown(function(ev) {
 });
 
 
-// 搜索歌手
-function searchList(sw) {
-  $.ajax({
-    type: "GET",
-    url: "https://api.imjad.cn/cloudmusic/",
-    data: {
-      type: "search",
-      s: sw,
-      search_type: 100
-    },
-    dataType: "json",
-    success: function (response) {
-      var artistlist = response.artist;
-      for (var i = 0;i < artistlist.length;i++) {
-
-      }
-    }
-  });
-}
-
-
-function searchArtist(sw) {
-  $.ajax({
-    type: "GET",
-    url: "https://api.imjad.cn/cloudmusic/",
-    dataType: "json",
-    data: {
-      type: "search",
-      s: sw,
-      search_type: 100
-    },
-    success: function(response) {
-      artistId = response.result.artists[0].id;
-      localStorage.artistId = artistId;
-      // 根据歌手ID获取热歌
-      getMusic(parseInt(artistId));
-
-    }
-  })
-}
-
 // 热歌列表对象
 var songList = new Object();
 
-//获取热歌信息
+//获取歌手热歌信息
 function getMusic(id) {
+  clearTimeout(commentTimer);
   //发送请求获取热歌信息列表
   $.ajax({
     type: "GET",
@@ -216,16 +202,31 @@ function getMusic(id) {
       // 获取数据
       songList.hotSongs = response.hotSongs;
       songList.artist = response.artist.name
+      // 动画
+      $('#searchDiv').animate({
+        top: '500px',
+        left: '20px'
+      },'fast');
+      $('.de').animate({
+        top: '20px'
+      },3000);
+      $("#cao").animate({
+        transform: 'rotate(0deg)'
+      },3000,function() {
+        // 播放歌曲
+        songPlay();
+      });
+        
       // 展示歌曲列表
       showSongList();
-      // 播放歌曲
-      songPlay();
+
     }
   });
 }
 
 // 播放歌曲
 function songPlay(){
+  clearTimeout(commentTimer);
   $.ajax({
     type: "GET",
     url: "https://api.imjad.cn/cloudmusic/",
@@ -241,8 +242,65 @@ function songPlay(){
       play();
       // 更新UI
       updateUI();
+      // searchMV();
       // 保存索引
       localStorage.songIndex = index;
+    }
+  });
+}
+
+// 歌曲评论
+function songComments() {
+  $.ajax({
+    type: "GET",
+    url: "https://api.imjad.cn/cloudmusic/",
+    data: {
+      type: 'comments',
+      id: songList.hotSongs[index].id
+    },
+    dataType: "json",
+    success: function (response) {
+      var commentsList = response.hotComments;
+      var i = 0;
+      var addComments = function () {
+        $('div').filter('.comment').last().fadeOut();
+        if (i > 20) {
+          return;
+        }
+        // 添加评论元素
+        var commentItem = '<div class="comment">' + commentsList[i].content + '</div>';
+        $('.app').append(commentItem);
+        var commentTop = Math.random() * 50 + '%';
+        var commentLeft = Math.random() * 80 + '%';
+        $('div').filter('.comment').last().css(
+          {'top': commentTop,
+          'left': commentLeft
+        }).mouseenter(function() {
+          clearTimeout(commentTimer);
+        }).mouseleave(function() {
+          addComments();
+        })
+        
+        i++;
+        commentTimer = setTimeout(addComments,2000);
+      }
+      addComments();
+    }
+  });
+}
+
+// 根据歌区搜索MV
+function searchMV() {
+  $.ajax({
+    type: "GET",
+    url: "https://api.imjad.cn/cloudmusic/",
+    data: {
+      type: "mv",
+      id: songList.hotSongs[index].mv
+    },
+    dataType: "json",
+    success: function (response) {
+      console.log(response.data.brs[480]);
     }
   });
 }
@@ -327,7 +385,7 @@ function renderLyric() {
   $(".music-lyric .lyric").append(lyrLi);
   setInterval(showLyric, 100); //怎么展示歌词
 }
-// 展示歌词
+// 显示歌词
 function showLyric() {
   var liH =
     $(".lyric li")
@@ -379,19 +437,28 @@ function selectSong() {
   }
 }
 
+function activePlayer() {
+  $('.app-container').mouseenter(function() {
+    $(this).css('bottom','0');
+  }).mouseleave(function() {
+    $(this).css('bottom','-45px');
+  })
+
+}
 
 $(document).ready(function() {
   // 获取歌手id
-  artistId = parseInt(localStorage.artistId);
+  // artistId = parseInt(localStorage.artistId);
   // 获取歌曲索引
-  index = parseInt(localStorage.songIndex);
+  // index = parseInt(localStorage.songIndex);
   
   // 获取音乐并播放
   // getMusic(artistId);
 
   // 音乐可视化
-  visualM();
+  // visualM();
 
+  activePlayer()
 
   // 界面元素拖放
   // var app = $('.app').children();

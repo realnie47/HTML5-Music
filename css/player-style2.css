@@ -2,11 +2,13 @@
 
 div.app-container {
     position: fixed;
-    bottom: 0;
+    bottom: -45px;
 
     width: 100%;
 
     background-color: rgba(0, 0, 0, 0.8);
+
+    transition: all 0.5s;
     
 }
 
@@ -148,8 +150,9 @@ div.progress {
 
 /* CD */
 div.de {
-    position: relative;
-    top: 20px;
+    position: absolute;
+    top: -550px;
+    left: 30%;
     width: 600px;
     margin: auto;
 }
@@ -159,9 +162,9 @@ div.bigCD {
     height: 600px;
     width: 600px;
     border-radius: 400px;
-    border: 6px solid rgba( 200, 200, 200, 0.6);
+    border: 2px solid rgba( 200, 200, 200, 0.6);
     background-color: #2b2b2b;
-    box-shadow: 3px 3px 5px darkgray;
+    /* box-shadow: 3px 3px 5px darkgray; */
 
     animation-name: cdRot;
     animation-duration: 20s;
@@ -208,17 +211,17 @@ div.hole {
 
 #cao {
     position: absolute;
-    z-index: 9999;
+    z-index: 888;
     top: -30px;
     right: 20px;
+    transform: rotate(-60deg);
     transform-origin: 80% 10%;
     transition: all 0.5s;
 }
 
-#search {
 
-    box-shadow: 0px 10px 10px #999;
-    
+/* 搜索框 */
+#search {
     background-color: #2b2b2b;
 
     font-size: 2em;
@@ -230,3 +233,55 @@ div.hole {
     color: #999;
 }
 
+/* 播放列表 */
+.albumContainer {
+
+    background-color: #2b2b2b;
+
+    color: #999;
+}
+.albumHead {
+
+    color: #999;
+    background-color: #2b2b2b;
+
+}
+
+#songList tr:nth-child(odd) {
+    background-color: #3b3b3b;
+}
+
+/* 歌词 */
+.music-lyric {
+    
+
+    background-color: #2b2b2b;
+
+    color: #999;
+
+}
+.music-lyric li.active {
+    color: #4b4b4b;
+}
+
+/* 评论按钮 */
+div.commentBtn {
+    position: absolute;
+    top: 15px;
+    right: -800px;
+    font-size: 1.6em;
+    color: #9b9b9b;
+}
+
+/* 播放器锁定 */
+div.lock {
+    width: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    color: #2b2b2b;
+    position: absolute;
+    right: 0;
+    top: -20px;
+    
+    
+}
