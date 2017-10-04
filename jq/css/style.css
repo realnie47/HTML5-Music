@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: #d2d5d6;
+    font: 14px/1.5 微软雅黑, sans-serif;
+}
+
+
+/* 歌词 */
+.music-lyric {
+    display: none;
+    position: absolute;
+    left: 50px;
+    top: 50px;
+
+    width: 300px;
+    height: 400px;
+    border-radius: 15px;
+
+    background-color: #eef1f2;
+
+    color: black;
+
+    overflow: hidden;
+}
+
+.music-lyric ul{
+    position: relative;
+    
+    padding: 0;
+    
+    list-style: none;
+
+    transition: all 1s;
+}
+
+.music-lyric li{
+    position: relative;
+
+	padding: 5px 0 2px 0;
+	
+	text-align: center;
+    font-size: 12px ;
+    
+	transition: all 1s;
+}
+.music-lyric li.active {
+  font-size: 13px;
+  color: #d2d5d6;
+}
+
+
+/* 播放列表 */
+.album {
+    display: none;
+    position: absolute;
+    right: 50px;
+    top: 50px;
+}
+
+.albumContainer {
+    height: 400px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 0px 10px 10px #999;
+
+    background-color: #eef1f2;
+
+    color: black;
+
+    overflow: scroll;
+}
+
+.albumHead {
+    position: relative;
+    height: 30px;
+    width: 308px;
+    margin-bottom: 10px;
+
+    background-color: #eef1f2;
+    box-shadow: 0px 10px 10px #999;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+    text-align: center;
+    line-height: 30px;
+}
+
+#random {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    font-size: 1.6em
+}
+
+#songList {
+    width: 308px;
+}
+
+#songList tr {
+    cursor: pointer;
+}
+
+#songList tr:nth-child(odd) {
+    background-color: #d2d5d6;
+}
+
+
+#songList tr.on {
+    background-color: gray !important;
+}
+
+#songList td {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    height: 30px;
+}
+
+
+/* 搜索框 */
+#searchDiv {
+    position: absolute;
+    top: 300px;
+    left: 40%;
+
+    box-shadow:0px 15px 10px -15px #000;
+}
+
+#search {
+    width: 300px;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    border: 1px solid transparent;
+    border-radius: 50px;
+    
+    background-color: #eef1f2;
+
+    font-size: 2em;
+
+}
+/* 搜索按钮 */
+#searchDiv i {
+    position: absolute;
+    right: 20px;
+    top: 8px;
+
+    font-size: 2em;
+}
+
+
+/* 评论 */
+div.comment {
+    /* display: none; */
+    position: absolute;
+    width: 300px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #999;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+div.comment:hover {
+    box-shadow: 3px 3px 5px #2b2b2b;
+    transform: scale(1.1,1.1);
+}
+
+
+/* 阴影 */
+.shadow {
+	position: relative;
+	max-width: 270px;
+	box-shadow: 0px 1px 4px rgba(0,0,0,0.3),
+				0px 0px 20px rgba(0,0,0,0.1) inset;
+}
+
+.shadow::before,
+.shadow::after {
+   content:"";
+   position:absolute;
+   z-index:-1;
+}
+
+.shadow::before,
+.shadow::after {
+   content:"";
+   position:absolute;
+   z-index:-1;
+   bottom:15px;
+   left:10px;
+   width:50%;
+   height:20%;
+}
+
+.shadow::before,
+.shadow::after {
+   content:"";
+   position:absolute;
+   z-index:-1;
+   bottom:15px;
+   left:10px;
+   width:50%;
+   height:20%;
+   box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   transform:rotate(-3deg);
+}
+
+.shadow::after{
+   right:10px;
+   left:auto;
+   transform:rotate(3deg);
+ }
+

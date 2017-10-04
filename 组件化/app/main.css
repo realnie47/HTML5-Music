@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  background-color: #d2d5d6;
+  font: 14px/1.5 微软雅黑, sans-serif;
+}

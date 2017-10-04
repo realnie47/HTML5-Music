@@ -1,0 +1,147 @@
+div.app-container {
+  position: fixed;
+  bottom: 0;
+
+  width: 100%;
+
+  background-color: rgba(0, 0, 0, 0.8);
+
+  transition: all 0.5s;
+  
+}
+
+div.player {
+  position: relative;
+  height: 50px;
+  width: 980px;
+  margin: auto;
+
+  transition: width 0.15s;
+}
+
+/* 缩小 */
+div.playerSwitch {
+  position: absolute;
+  top: 2px;
+  right: -220px;
+  color: #9b9b9b;
+}
+
+i#min {
+  display: none;
+}
+
+
+/* 专辑图片 */
+div.album-pic {
+  position: absolute;
+  top: 5px;
+  left: 200px;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 5px;
+
+  background-size: contain;
+  
+}
+
+
+/* 音乐信息 */
+div.info {
+  position: absolute;
+  top: 5px;
+  left: 250px;
+
+}
+div.info-title {
+  display: inline;
+
+  color: #e8e8e8
+}
+div.info-songer {
+  display: inline;
+
+  color: #9b9b9b;
+  font-size: 0.8em;
+}
+
+
+/* 控制区 */
+div.controls {
+  position: absolute;
+  top: -3px;
+  left: 60px;
+  color: white;
+  
+}
+
+div.play {
+  display: inline-block;
+  
+  margin: auto 10px;
+
+  font-size: 3em;
+  text-align: center;
+  color: white;
+}
+div.previous,
+div.next {
+  display: inline-block;
+  
+  vertical-align: 18%;
+  font-size: 1.6em;
+  color: #9b9b9b;
+}
+
+div.list {
+  position: absolute;
+  top: 15px;
+  right: -720px;
+
+  font-size: 1.6em;
+  color: #9b9b9b;
+}
+
+div.lrc {
+  position: absolute;
+  top: 13px;
+  right: -760px;
+  font-size: 1.6em;
+  color: #9b9b9b;
+}
+
+
+/* 音频可视化 */
+div.cdiv {
+  position: absolute;
+  left: 250px;
+  top: 30px;
+
+  width: 500px;
+  height: 5px;
+  
+  border-radius: 5px;
+
+  background-color: black;
+
+  overflow: hidden;
+}
+
+div.progress {
+  height: 6px;
+
+  background-color: #a40000;
+
+  border-radius: 5px;
+}
+
+#canvas {
+  display: none;
+  position: absolute;
+  bottom: 0px;
+
+  width: 375px;
+  height: 80px;
+}

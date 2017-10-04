@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN" manifest="index.appcache">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5音乐</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/player-style2.css" id="style">
+</head>
+<body>
+
+    <div class="app">
+        <!-- 播放器 -->
+        <div class="app-container">
+            <div class="lock">
+                <i class="fa fa-unlock"></i>
+            </div>
+            <div class="player" id="musicPlayer">
+                <div class="playerSwitch">
+                    <i class="fa fa-window-minimize" onclick="switchCSS1()" id="min"></i>
+                    <i class="fa fa-window-maximize" onclick="switchCSS2()" id="max"></i>
+                </div>
+                <!-- 音乐专辑图 -->
+                <div class="album-pic"></div>
+                <!-- 音乐信息 -->
+                <div class="info">
+                    <!-- 歌曲名 -->
+                    <div class="info-title">歌名</div>
+                    <!-- 歌手 -->
+                    <div class="info-songer">歌手</div>
+                </div>
+    
+                <!-- 控制区 -->
+                <div class="controls">
+                    <!-- 歌曲列表 -->
+                    <div class="list"><i class="fa fa-th-list"></i></div>
+                    <!-- 上一曲 -->
+                    <div class="previous">
+                        <i class="fa fa-step-backward"></i>
+                    </div>
+                    <!-- 播放 -->
+                    <div class="play">
+                        <i class="fa fa-pause-circle"></i>
+                    </div>
+                    <!-- 下一曲 -->
+                    <div class="next">
+                        <i class="fa fa-step-forward"></i>
+                    </div>
+                    <!-- 歌词 -->
+                    <div class="lrc"><i class="fa fa-file-text-o"></i></div>
+                    <!-- 评论 -->
+                    <div class="commentBtn" title="关闭评论"><i class="fa fa-commenting-o"></i></div>
+                </div>
+    
+                <!-- 音频可视化 -->
+                <div class="cdiv">
+                    <div class="progress"></div>
+                    <canvas id="canvas"></canvas>
+                </div>
+                
+                <!-- 音频控件 -->
+                <audio id="audio">  
+                </audio>
+            </div>
+       
+       
+        </div>
+    
+        <!-- 歌词 -->
+        <div class="music-lyric" id="musicLyric">
+            <div class="lyric-view">
+                <ul class="lyric"></ul>
+            </div>
+        </div>
+
+        <!-- 歌曲列表 -->
+        <div class="album" id="musicAlbum">
+            <div class="albumHead">
+                <span>歌曲列表</span>
+                <div class="fa fa-random" id="random"></div>
+            </div>
+            <div class="albumContainer">
+                <table id="songList" >
+                    <tr>
+                        <td>歌 曲</td>
+                        <td>歌 手</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 搜索框 -->
+        <div id="searchDiv">
+            <input type="text" id="search" value="金玟岐" autocomplete="off"> 
+            <i class="fa fa-search"></i>
+        </div>  
+        
+        <!-- 大碟 -->
+        <div class="de">
+            <div><img src="image/caozong.png" alt="" id="cao"></div>
+            <div class="bigCD">
+                <div class="hole"></div>
+                <img src="#" alt="">
+            </div>
+        </div>
+
+
+        </div>
+
+        
+    </div>
+
+    <!-- script -->
+    <script>
+        // 切换播放器
+        function switchCSS1() {
+            $('#style').attr('href','css/player-style2.css')
+        }
+        function switchCSS2() {
+            $('#style').attr('href','css/player-style1.css')
+        }
+    </script>
+    <script src="js/lyr.js"></script>
+    <script src="js/songlist.js"></script>
+    <script src="js/search.js"></script>
+    <!-- <script src="js/option.js"></script> -->
+    <!-- <script src="js/audio.js"></script> -->
+    <script src="js/play.js"></script>
+</body>
+</html>
